@@ -24,6 +24,9 @@ const SIZES = {
 
 const ProgressBar = ({ value, size }) => {
   const styles = SIZES[size];
+  if (!styles) {
+    throw new Error(`unknown size passed to ProgressBarCustom: ${size}`);
+  }
   return (
     <>
       <VisuallyHidden>
@@ -53,6 +56,9 @@ const StyledProgressBar = styled.progress`
     box-shadow: inset 0px 2px 4px ${COLORS.transparentGray35};
     border-radius: var(--radius);
     padding: var(--padding);
+
+    /* trim off corners when progressbar is near full
+    overflow: hidden; */
   }
   &::-webkit-progress-value {
     background-color: ${COLORS.primary};
