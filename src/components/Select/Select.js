@@ -6,52 +6,64 @@ import Icon from '../Icon';
 import { getDisplayedValue } from './Select.helpers';
 
 const Select = ({ label, value, onChange, children }) => {
-  // const displayedValue = getDisplayedValue(value, children);
+  const displayedValue = getDisplayedValue(value, children);
 
   return (
     <Wrapper>
       <NativeSelect value={value} onChange={onChange}>
-        <option value={label}>{label}</option>
         {children}
       </NativeSelect>
-      <ChevronDownIcon id="chevron-down" size={20} strokeWidth={2} />
+      <PresentationalBit>
+        {displayedValue}
+        <IconWrapper style={{ '--size': 24 + 'px' }}>
+          <Icon id="chevron-down" size={24} strokeWidth={1} />
+        </IconWrapper>
+      </PresentationalBit>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  display: inline-block;
   position: relative;
-  background-color: ${COLORS.transparentGray15};
-  border-radius: 8px;
-  color: ${COLORS.gray700};
-
-  &:hover {
-    color: revert;
-  }
+  width: max-content;
 `;
 
 const NativeSelect = styled.select`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  /* Allow the select to span the full height in safari */
   -webkit-appearance: none;
-  appearance: none;
-  background-color: inherit;
-  height: 43px;
-  font-family: 'Roboto', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 19px;
-  color: inherit;
-  padding: 12px 52px 12px 16px;
-  border-radius: 8px;
-  border: none;
 `;
 
-const ChevronDownIcon = styled(Icon)`
+const PresentationalBit = styled.div`
+  color: ${COLORS.gray700};
+  background-color: ${COLORS.transparentGray15};
+  font-size: ${16 / 16}rem;
+  padding: 12px 16px;
+  padding-right: 52px;
+  border-radius: 8px;
+
+  ${NativeSelect}:focus + & {
+    outline: 1px dotted #212121;
+    outline: 5px auto -webkit-focus-ring-color;
+  }
+  ${NativeSelect}:hover + & {
+    color: ${COLORS.black};
+  }
+`;
+
+const IconWrapper = styled.div`
   position: absolute;
-  color: inherit;
-  top: 12px;
-  right: 18px;
+  top: 0;
+  bottom: 0;
+  right: 10px;
+  margin: auto;
+  width: var(--size);
+  height: var(--size);
   pointer-events: none;
 `;
 
