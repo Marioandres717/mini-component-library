@@ -8,18 +8,18 @@ import VisuallyHidden from '../VisuallyHidden';
 
 const SIZES = {
   small: {
-    '--height': '24px',
-    '--font-size': '14px',
     '--border-bottom': `1px solid ${COLORS.black}`,
-    '--icon-top': '6px',
-    '--input-padding-left': '12px',
+    '--font-size': `${14 / 16}rem`,
+    '--height': `${24 / 16}rem`,
+    '--icon-size': `${10.67 / 16}rem`,
+    '--input-padding-left': `${16 / 16}rem`,
   },
   large: {
-    '--height': '36px',
-    '--font-size': '18px',
     '--border-bottom': `2px solid ${COLORS.black}`,
-    '--icon-top': '9px',
-    '--input-padding-left': '20px',
+    '--font-size': `${18 / 16}rem`,
+    '--height': `${36 / 16}rem`,
+    '--icon-size': `${16 / 16}rem`,
+    '--input-padding-left': `${24 / 16}rem`,
   },
 };
 
@@ -89,9 +89,10 @@ const Input = styled.input`
 
 const IconWrapper = styled(Icon)`
   position: absolute;
-  top: var(--icon-top);
-  left: 0;
-  margin: auto;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  height: var(--icon-size);
 `;
 
 const VisuallyHiddenWrapper = styled(VisuallyHidden)`
