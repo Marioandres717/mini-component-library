@@ -31,33 +31,28 @@ const IconInput = ({
   placeholder,
 }) => {
   const styles = SIZES[size];
+  if (!styles) {
+    throw new Error(`unknown size passed to IconInput: ${size}`);
+  }
   return (
-    <Wrapper width={width} style={styles}>
+    <Wrapper style={{ ...styles, '--width': width + 'px' }}>
+      <VisuallyHidden>
+        <label for="iconInput">{label}</label>
+      </VisuallyHidden>
       <IconWrapper
         id={icon}
         size={size === 'small' ? '10.67' : '16'}
         style={styles}
       />
-      <VisuallyHiddenWrapper>
-        <label for="iconInput">{label}</label>
-      </VisuallyHiddenWrapper>
       <Input id="iconInput" placeholder={placeholder} style={styles} />
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.label`
+  display: block;
   position: relative;
-  width: ${(props) => props.width}px;
-  height: var(--height);
-  border-bottom: var(--border-bottom);
   color: ${COLORS.gray700};
-
-  &:focus-within {
-    outline: 1px dotted #212121;
-    outline: 2px auto -webkit-focus-ring-color;
-    outline-offset: 2px;
-  }
 
   &:hover {
     color: ${COLORS.black};
@@ -65,21 +60,16 @@ const Wrapper = styled.div`
 `;
 
 const Input = styled.input`
-  position: absolute;
-  top: 0;
-  left: 0;
+  width: var(--width);
+  height: var(--height);
+  font-size: var(--font-size);
   background-color: inherit;
   border: none;
+  border-bottom: var(--border-bottom);
   padding-left: var(--input-padding-left);
-  height: 100%;
-  width: 100%;
-  font-size: var(--font-size);
   color: inherit;
   font-weight: 700;
-
-  &:focus {
-    outline: none;
-  }
+  outline-offset: 2px;
 
   &::placeholder {
     color: ${COLORS.gray500};
@@ -89,14 +79,10 @@ const Input = styled.input`
 
 const IconWrapper = styled(Icon)`
   position: absolute;
-  top: 0;
   bottom: 0;
+  top: 0;
   margin: auto 0;
   height: var(--icon-size);
-`;
-
-const VisuallyHiddenWrapper = styled(VisuallyHidden)`
-  margin: 0;
 `;
 
 export default IconInput;
